@@ -1,26 +1,554 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* ── Color system: paper & ink (gold ≤3%) ── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: #EFE9DC;
+  --color-paper-2: #E4DDCB;
+  --color-ink: #14130F;
+  --color-ink-soft: #2A2823;
+  --color-charcoal: #3A3833;
+  --color-smoke: #7A766C;
+  --color-bone: #C9C2B0;
+  --color-gold: #C8961F;
+  --color-gold-deep: #8E6A14;
+  --color-success: #4F7A3A;
+  --color-error: #A03B2C;
+
+  --font-display: var(--font-newsreader);
+  --font-body: var(--font-inter-tight);
+  --font-marker: var(--font-caveat);
+  --font-stencil: var(--font-stardos-stencil);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ── Base ── */
+/* (Preflight from `@import "tailwindcss"` already resets margin/padding/box-sizing
+   on *, ::before, ::after inside @layer base. A duplicate unlayered reset here
+   would beat layered utilities like .mt-* via cascade-layer rules.) */
+
+html { scroll-behavior: smooth; }
+
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: default;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Paper grain overlay ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.10;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+/* ── Ink-edge SVG filter for roughen borders ── */
+.ink-edge {
+  filter: url(#inkRoughen);
+}
+
+/* ── Halftone pattern for charcoal sections ── */
+.halftone {
+  background-image: radial-gradient(circle, var(--color-ink) 0.5px, transparent 0.5px);
+  background-size: 4px 4px;
+  opacity: 0.06;
+}
+
+/* ── Hard offset shadows (printed/sticker feel) ── */
+.shadow-hard {
+  box-shadow: 4px 4px 0 var(--color-ink);
+}
+
+.shadow-hard-sm {
+  box-shadow: 2px 2px 0 var(--color-ink);
+}
+
+/* ── Ink-block button ── */
+.btn-ink {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border: none;
+  padding: 16px 36px;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: var(--font-body);
+  box-shadow: 4px 4px 0 var(--color-ink);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  position: relative;
+}
+
+.btn-ink:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--color-ink);
+}
+
+.btn-ink:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--color-ink);
+}
+
+.btn-ink-gold {
+  background: var(--color-gold);
+  color: var(--color-ink);
+  box-shadow: 4px 4px 0 var(--color-gold-deep);
+}
+
+.btn-ink-gold:hover {
+  box-shadow: 2px 2px 0 var(--color-gold-deep);
+}
+
+.btn-ink-gold:active {
+  box-shadow: 0 0 0 var(--color-gold-deep);
+}
+
+/* ── Paper-outline button ── */
+.btn-paper {
+  background: transparent;
+  color: var(--color-ink);
+  border: 2px solid var(--color-ink);
+  padding: 14px 32px;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.btn-paper:hover {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+/* ── Focus ring ── */
+*:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+/* ── Ink-stroke divider (SVG-based) ── */
+.ink-divider {
+  height: 3px;
+  background: var(--color-ink);
+  border: none;
+  opacity: 0.8;
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 3' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 1.5 Q25 0, 50 1.5 T100 1.5 T150 1.5 T200 1.5' stroke='black' stroke-width='3' fill='none'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 3' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 1.5 Q25 0, 50 1.5 T100 1.5 T150 1.5 T200 1.5' stroke='black' stroke-width='3' fill='none'/%3E%3C/svg%3E");
+  mask-size: 100% 100%;
+}
+
+/* ── Torn edge effect ── */
+.torn-edge {
+  clip-path: polygon(
+    0% 2%, 3% 0%, 7% 3%, 12% 0%, 16% 2%, 20% 0%, 25% 3%, 30% 0%, 35% 2%, 40% 0%,
+    45% 3%, 50% 0%, 55% 2%, 60% 0%, 65% 3%, 70% 0%, 75% 2%, 80% 0%, 85% 3%, 90% 0%,
+    95% 2%, 100% 0%, 100% 100%, 97% 98%, 93% 100%, 88% 97%, 83% 100%, 78% 98%,
+    73% 100%, 68% 97%, 63% 100%, 58% 98%, 53% 100%, 48% 97%, 43% 100%, 38% 98%,
+    33% 100%, 28% 97%, 23% 100%, 18% 98%, 13% 100%, 8% 97%, 3% 100%, 0% 98%
+  );
+}
+
+/* ── Scroll reveal (stamp-in) ── */
+.reveal-stamp {
+  opacity: 0;
+  transform: scale(1.04) rotate(-0.5deg);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.reveal-stamp.visible {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+/* ── Ink-wipe headline reveal ── */
+.ink-wipe {
+  clip-path: inset(0 100% 0 0);
+  animation: inkWipe 0.8s ease forwards;
+}
+
+@keyframes inkWipe {
+  to { clip-path: inset(0 0% 0 0); }
+}
+
+/* ── fadeSlideUp ── */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Sakura petals (sumi-e style) ── */
+.petal {
+  position: absolute;
+  pointer-events: none;
+  animation: petalFall linear infinite;
+}
+
+@keyframes petalFall {
+  0% {
+    transform: translateY(-40px) rotate(0deg) translateX(0px);
+    opacity: 0;
+  }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.5; }
+  100% {
+    transform: translateY(110vh) rotate(360deg) translateX(80px);
+    opacity: 0;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ── Marquee ticker ── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── Float animation (modal panda) ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-14px); }
+}
+
+/* ── Cast grid: zine-collage mosaic ── */
+.cast-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+}
+
+.cast-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.cast-card .cast-img-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+@media (max-width: 767px) {
+  .cast-card .cast-img-wrap {
+    aspect-ratio: 1 / 1;
+    flex: 0 0 auto;
+  }
+  /* Reset any grid-area on mobile so cards stack */
+  .cast-card { grid-area: auto !important; }
+}
+
+@media (min-width: 768px) {
+  .cast-grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 280px 280px;
+    grid-template-areas:
+      "king king samurai skater"
+      "king king dragon  dragon";
+  }
+}
+
+@media (min-width: 1100px) {
+  .cast-grid {
+    grid-template-rows: 340px 340px;
+  }
+}
+
+/* ── Claim section ── */
+.claim-section {
+  padding: 96px 24px;
+  position: relative;
+  background: var(--color-paper);
+  overflow: hidden;
+  border-top: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
+}
+
+.claim-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .claim-section { padding: 120px 48px; }
+  .claim-inner { grid-template-columns: 1fr 1.1fr; gap: 80px; }
+}
+
+.claim-character {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.claim-img {
+  width: 100%;
+  max-width: 340px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 40px color-mix(in srgb, var(--color-gold) 25%, transparent));
+  animation: float 5s ease-in-out infinite;
+}
+
+.claim-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--color-gold);
+  color: var(--color-ink);
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow: 2px 2px 0 var(--color-gold-deep);
+}
+
+.claim-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section-eyebrow {
+  font-family: var(--font-stencil);
+  font-size: 12px;
+  color: var(--color-gold-deep);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-eyebrow::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--color-gold-deep);
+}
+
+.claim-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(36px, 4vw, 54px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+}
+
+.claim-title em {
+  color: var(--color-gold);
+  font-style: normal;
+}
+
+.claim-desc {
+  color: var(--color-ink-soft);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.claim-cta-banner,
+.claim-warn-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px;
+  border: 2px solid var(--color-ink);
+  background: var(--color-paper-2);
+  font-size: 14px;
+  flex-wrap: wrap;
+  box-shadow: 4px 4px 0 var(--color-ink);
+}
+
+.claim-warn-banner {
+  border-color: var(--color-gold-deep);
+  background: color-mix(in srgb, var(--color-gold) 10%, var(--color-paper));
+  box-shadow: 4px 4px 0 var(--color-gold-deep);
+}
+
+.claim-warn-btn {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border: none;
+  padding: 8px 16px;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+
+.claim-warn-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.claim-tier-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 640px) {
+  .claim-tier-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.claim-tier-card {
+  background: var(--color-paper-2);
+  border: 2px solid var(--color-ink);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  box-shadow: 4px 4px 0 var(--color-ink);
+}
+
+.claim-tier-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-bottom: 1px dashed color-mix(in srgb, var(--color-ink) 30%, transparent);
+  padding-bottom: 10px;
+}
+
+.claim-tier-label {
+  font-family: var(--font-stencil);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-gold-deep);
+  font-weight: 700;
+}
+
+.claim-tier-amount {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 28px;
+  color: var(--color-ink);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.claim-tier-amount sup {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-gold-deep);
+  letter-spacing: 0.08em;
+  margin-left: 4px;
+}
+
+.claim-tier-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  font-size: 11px;
+  margin: 0;
+}
+
+.claim-tier-meta div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.claim-tier-meta dt {
+  color: var(--color-smoke);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 10px;
+}
+
+.claim-tier-meta dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  color: var(--color-ink);
+  font-weight: 600;
+  font-size: 12px;
+  word-break: break-word;
+}
+
+.claim-tier-countdown {
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--color-gold-deep);
+  font-weight: 700;
+}
+
+.claim-tier-error {
+  font-size: 11px;
+  color: var(--color-error);
+  line-height: 1.4;
+}
+
+.claim-btn {
+  background: var(--color-gold);
+  color: var(--color-ink);
+  border: none;
+  padding: 12px 14px;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: var(--font-body);
+  width: 100%;
+  box-shadow: 3px 3px 0 var(--color-gold-deep);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.claim-btn:hover:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--color-gold-deep);
+}
+
+.claim-btn:active:not(:disabled) {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--color-gold-deep);
+}
+
+.claim-btn:disabled {
+  background: var(--color-bone);
+  color: var(--color-smoke);
+  box-shadow: 3px 3px 0 var(--color-smoke);
+  cursor: not-allowed;
+}
+
+.claim-note {
+  font-size: 11px;
+  color: var(--color-smoke);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .petal { display: none; }
+  .ink-wipe { clip-path: none; }
+  .reveal-stamp { opacity: 1; transform: none; }
 }
