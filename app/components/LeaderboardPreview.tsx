@@ -1,9 +1,8 @@
 const PREVIEW_ROWS = [
-  { rank: 1, address: "0x3f4a…c891", amount: "48,200,000", tag: "GRUMP KING" },
-  { rank: 2, address: "0xa12b…ff03", amount: "31,500,000" },
-  { rank: 3, address: "0x7c8d…2244", amount: "22,100,000" },
-  { rank: 4, address: "0x9e1f…b730", amount: "18,750,000" },
-  { rank: 5, address: "0x5511…4c9a", amount: "14,900,000" },
+  { label: "Claim events", value: "Pending first claims" },
+  { label: "Top wallet", value: "Hidden until onchain" },
+  { label: "Pool status", value: "Read from Tempo contract" },
+  { label: "Cooldowns", value: "Per wallet and tier" },
 ];
 
 export default function LeaderboardPreview() {
@@ -21,7 +20,7 @@ export default function LeaderboardPreview() {
           >
             Top Holders.{" "}
             <span className="font-marker text-gold" style={{ fontSize: "0.85em" }}>
-              He's watching.
+              He&apos;s watching.
             </span>
           </h2>
         </div>
@@ -29,41 +28,29 @@ export default function LeaderboardPreview() {
         <div className="reveal-stamp">
           {/* Column headers */}
           <div className="flex items-center gap-4 md:gap-8 pb-3 border-b border-ink/30">
-            <span className="w-8 font-stencil text-xs text-smoke uppercase tracking-widest">#</span>
-            <span className="flex-1 font-stencil text-xs text-smoke uppercase tracking-widest">Address</span>
-            <span className="font-stencil text-xs text-smoke uppercase tracking-widest text-right">$TMPY Held</span>
+            <span className="flex-1 font-stencil text-xs text-smoke uppercase tracking-widest">Signal</span>
+            <span className="font-stencil text-xs text-smoke uppercase tracking-widest text-right">Status</span>
           </div>
 
           {PREVIEW_ROWS.map((row) => (
             <div
-              key={row.rank}
+              key={row.label}
               className="flex items-center gap-4 md:gap-8 py-5 border-b border-ink/15"
             >
-              <span
-                className="w-8 font-display font-bold text-xl leading-none flex-shrink-0"
-                style={{ color: row.rank === 1 ? "var(--color-gold)" : "var(--color-ink)" }}
-              >
-                {row.rank}
-              </span>
               <div className="flex-1 min-w-0">
-                <span className="font-mono text-sm text-smoke">{row.address}</span>
-                {row.tag && (
-                  <span className="ml-3 font-stencil text-[10px] text-gold uppercase tracking-widest">
-                    {row.tag}
-                  </span>
-                )}
+                <span className="font-mono text-sm text-smoke">{row.label}</span>
               </div>
-              <span className="font-display font-bold text-base text-ink text-right flex-shrink-0">
-                {row.amount}
+              <span className="font-display font-bold text-base text-ink text-right max-w-[52%] break-words">
+                {row.value}
               </span>
             </div>
           ))}
         </div>
 
         <div className="mt-10 flex justify-end reveal-stamp">
-          <a href="/leaderboard" className="btn-paper text-sm py-3 px-8 no-underline">
-            View Full Leaderboard &rarr;
-          </a>
+          <span className="inline-flex border-2 border-ink/20 px-8 py-3 text-sm text-smoke uppercase tracking-wider">
+            Leaderboard unlocks after live claims
+          </span>
         </div>
 
       </div>

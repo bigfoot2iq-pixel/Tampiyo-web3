@@ -10,7 +10,14 @@ export function useScrollReveal() {
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const init = useCallback(() => {
-    if (observerRef.current) return;
+    observerRef.current?.disconnect();
+
+    const els = document.querySelectorAll(".reveal-stamp");
+
+    if (!("IntersectionObserver" in window)) {
+      els.forEach((el) => el.classList.add("visible"));
+      return;
+    }
 
     observerRef.current = new IntersectionObserver(
       (entries) => {
@@ -24,12 +31,14 @@ export function useScrollReveal() {
       { threshold: 0.12 }
     );
 
-    const els = document.querySelectorAll(".reveal-stamp");
     els.forEach((el) => observerRef.current!.observe(el));
   }, []);
 
   useEffect(() => {
     init();
-    return () => observerRef.current?.disconnect();
+    return () => {
+      observerRef.current?.disconnect();
+      observerRef.current = null;
+    };
   }, [init]);
 }

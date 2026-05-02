@@ -26,7 +26,10 @@
    on *, ::before, ::after inside @layer base. A duplicate unlayered reset here
    would beat layered utilities like .mt-* via cascade-layer rules.) */
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
 
 
 body {
@@ -39,6 +42,30 @@ body {
   cursor: default;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: color-mix(in srgb, var(--color-gold) 35%, transparent);
+}
+
+a,
+button {
+  touch-action: manipulation;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 10000;
+  transform: translateY(-160%);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  padding: 10px 14px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 0.15s ease;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
 }
 
 /* ── Paper grain overlay ── */
@@ -132,6 +159,135 @@ body::before {
 .btn-paper:hover {
   background: var(--color-ink);
   color: var(--color-paper);
+}
+
+.btn-paper:disabled {
+  cursor: not-allowed;
+  color: var(--color-smoke);
+  border-color: color-mix(in srgb, var(--color-ink) 25%, transparent);
+  background: transparent;
+}
+
+/* -- Wallet controls -- */
+.wallet-button-group {
+  display: inline-flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.wallet-button {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px solid var(--color-ink);
+  border-radius: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  box-shadow: 3px 3px 0 var(--color-ink);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  padding: 10px 14px;
+  text-transform: uppercase;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease;
+  white-space: nowrap;
+}
+
+.wallet-button:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--color-ink);
+}
+
+.wallet-button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--color-ink);
+}
+
+.wallet-button-connect {
+  background: var(--color-gold);
+  box-shadow: 3px 3px 0 var(--color-gold-deep);
+}
+
+.wallet-button-connect:hover {
+  box-shadow: 1px 1px 0 var(--color-gold-deep);
+}
+
+.wallet-button-connect:active {
+  box-shadow: 0 0 0 var(--color-gold-deep);
+}
+
+.wallet-button-chain {
+  background: var(--color-gold);
+  box-shadow: 3px 3px 0 var(--color-gold-deep);
+}
+
+.wallet-button-chain:hover {
+  box-shadow: 1px 1px 0 var(--color-gold-deep);
+}
+
+.wallet-button-chain:active {
+  box-shadow: 0 0 0 var(--color-gold-deep);
+}
+
+.wallet-button-account {
+  min-width: 0;
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.wallet-button-error {
+  background: var(--color-error);
+  color: var(--color-paper);
+}
+
+.wallet-button-placeholder {
+  width: 154px;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.wallet-button-placeholder:hover,
+.wallet-button-placeholder:active {
+  transform: none;
+  box-shadow: 3px 3px 0 var(--color-ink);
+}
+
+.wallet-chain-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  border: 1px solid color-mix(in srgb, var(--color-ink) 24%, transparent);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.wallet-account-name,
+.wallet-chain-name {
+  max-width: 128px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 640px) {
+  .wallet-button-group {
+    gap: 5px;
+  }
+
+  .wallet-button {
+    min-height: 38px;
+    padding: 9px 10px;
+    font-size: 11px;
+  }
+
+  .wallet-account-name {
+    max-width: 88px;
+  }
 }
 
 /* ── Focus ring ── */
@@ -326,6 +482,24 @@ body::before {
   gap: 24px;
 }
 
+.claim-proof-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.claim-proof-row span {
+  border: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
+  background: color-mix(in srgb, var(--color-gold) 8%, var(--color-paper));
+  color: var(--color-ink-soft);
+  padding: 7px 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
 .section-eyebrow {
   font-family: var(--font-stencil);
   font-size: 12px;
@@ -488,13 +662,6 @@ body::before {
   word-break: break-word;
 }
 
-.claim-tier-countdown {
-  font-size: 12px;
-  font-family: var(--font-mono);
-  color: var(--color-gold-deep);
-  font-weight: 700;
-}
-
 .claim-tier-error {
   font-size: 11px;
   color: var(--color-error);
@@ -513,6 +680,12 @@ body::before {
   cursor: pointer;
   font-family: var(--font-body);
   width: 100%;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+  text-align: center;
   box-shadow: 3px 3px 0 var(--color-gold-deep);
   transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
@@ -539,6 +712,33 @@ body::before {
   color: var(--color-smoke);
   line-height: 1.6;
   font-style: italic;
+}
+
+/* ── Tempo proof section ── */
+.tempo-proof-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 700px) {
+  .tempo-proof-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.tempo-proof-card {
+  min-height: 180px;
+  border: 1px solid color-mix(in srgb, var(--color-paper) 22%, transparent);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--color-paper) 10%, transparent), transparent 52%),
+    color-mix(in srgb, var(--color-charcoal) 76%, var(--color-ink));
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: 4px 4px 0 color-mix(in srgb, var(--color-gold) 55%, transparent);
 }
 
 /* ── Reduced motion ── */

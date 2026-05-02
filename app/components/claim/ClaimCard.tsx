@@ -2,19 +2,18 @@
 import { useEffect, useState } from 'react';
 import {
   useAccount,
+  usePublicClient,
   useReadContract,
   useWriteContract,
-  useWaitForTransactionReceipt,
 } from 'wagmi';
 import { useQueryClient } from '@tanstack/react-query';
 import { formatUnits, maxUint256 } from 'viem';
 import { tampiyoClaimAbi } from '@/app/lib/abi/tampiyoClaim';
 import { erc20Abi } from '@/app/lib/abi/erc20';
-import { addresses } from '@/app/lib/addresses';
-import { tempoMainnet } from '@/app/lib/chains';
-import { formatDuration } from '@/app/lib/format';
+import { activeAddresses } from '@/app/lib/addresses';
+import { activeChain } from '@/app/lib/chains';
+import { formatCountdown, formatDuration } from '@/app/lib/format';
 import { useEnsureTempo } from '../ChainGuard';
-import { CountdownLabel } from './CountdownLabel';
 import type { CategoryId, CategoryLabel } from './categories';
 
 export function ClaimCard({
@@ -27,9 +26,10 @@ export function ClaimCard({
   const { address, isConnected } = useAccount();
   const { ensure, isWrongChain } = useEnsureTempo();
   const queryClient = useQueryClient();
-  const { data: hash, writeContract, isPending: isWritePending, reset: resetWrite } = useWriteContract();
-  const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash });
+  const publicClient = usePublicClient({ chainId: activeChain.id });
+  const { writeContractAsync, isPending: isWritePending } = useWriteContract();
   const [step, setStep] = useState<'idle' | 'approve' | 'claim'>('idle');
+  const [isConfirming, setIsConfirming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [now, setNow] = useState(() => Math.floor(Date.now() / 1000));
 
@@ -38,12 +38,11 @@ export function ClaimCard({
     return () => clearInterval(id);
   }, []);
 
-  const addrs = addresses[tempoMainnet.id];
-  const claimAddr = addrs.claim;
-  const feeTokenAddr = addrs.feeToken;
-  const tampiyoAddr = addrs.tampiyo;
+  const claimAddr = activeAddresses.claim;
+  const feeTokenAddr = activeAddresses.feeToken;
+  const tampiyoAddr = activeAddresses.tampiyo;
 
-  const { data: catData, queryKey: catKey } = useReadContract({
+  const { data: catData } = useReadContract({
     address: claimAddr,
     abi: tampiyoClaimAbi,
     functionName: 'getCategory',
@@ -87,7 +86,7 @@ export function ClaimCard({
     functionName: 'symbol',
   });
 
-  const amountStr = catData?.amount !== undefined ? formatUnits(catData.amount, 18) : '...';
+  const amountStr = catData?.amount !== undefined ? formatUnits(catData.amount, 18) : 'Loading…';
   const cooldownSec = catData?.cooldown !== undefined ? Number(catData.cooldown) : 0;
   const feeStr = catData?.fee !== undefined ? formatUnits(catData.fee, 18) : '0';
   const enabled = catData?.enabled ?? false;
@@ -103,53 +102,41 @@ export function ClaimCard({
   const insufficientFee =
     feeBal !== undefined && catData?.fee !== undefined && feeBal < catData.fee;
 
-  useEffect(() => {
-    if (!isSuccess) return;
-    if (step === 'approve') {
-      queryClient.invalidateQueries({ queryKey: allowanceKey });
-      setStep('claim');
-      resetWrite();
-      writeContract({
-        address: claimAddr,
-        abi: tampiyoClaimAbi,
-        functionName: 'claim',
-        args: [categoryId],
-      });
-      return;
-    }
-    if (step === 'claim') {
-      queryClient.invalidateQueries({ queryKey: lastClaimKey });
-      queryClient.invalidateQueries({ queryKey: feeBalKey });
-      queryClient.invalidateQueries({ queryKey: poolKey });
-      queryClient.invalidateQueries({ queryKey: allowanceKey });
-      setStep('idle');
-      resetWrite();
-    }
-  }, [isSuccess, step]);
-
   async function handleClick() {
     try {
       setError(null);
       await ensure();
+      if (!publicClient) throw new Error('Tempo RPC client unavailable.');
 
       if (needsApproval) {
         setStep('approve');
-        writeContract({
+        const approvalHash = await writeContractAsync({
           address: feeTokenAddr,
           abi: erc20Abi,
           functionName: 'approve',
           args: [claimAddr, maxUint256],
         });
-        return;
+        setIsConfirming(true);
+        await publicClient.waitForTransactionReceipt({ hash: approvalHash });
+        await queryClient.invalidateQueries({ queryKey: allowanceKey });
       }
 
       setStep('claim');
-      writeContract({
+      const claimHash = await writeContractAsync({
         address: claimAddr,
         abi: tampiyoClaimAbi,
         functionName: 'claim',
         args: [categoryId],
       });
+      setIsConfirming(true);
+      await publicClient.waitForTransactionReceipt({ hash: claimHash });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: lastClaimKey }),
+        queryClient.invalidateQueries({ queryKey: feeBalKey }),
+        queryClient.invalidateQueries({ queryKey: poolKey }),
+        queryClient.invalidateQueries({ queryKey: allowanceKey }),
+      ]);
+      setStep('idle');
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
       if (/user rejected/i.test(msg)) setError('Transaction rejected.');
@@ -159,6 +146,8 @@ export function ClaimCard({
       else if (/CategoryDisabled/.test(msg)) setError('Tier disabled.');
       else setError(msg.slice(0, 140));
       setStep('idle');
+    } finally {
+      setIsConfirming(false);
     }
   }
 
@@ -176,7 +165,7 @@ export function ClaimCard({
     btnLabel = 'Pool Empty';
     disabled = true;
   } else if (cooldownActive) {
-    btnLabel = 'Cooldown Active';
+    btnLabel = `Available in ${formatCountdown(nextClaimAt - now)}`;
     disabled = true;
   } else if (insufficientFee) {
     btnLabel = `Need ${feeStr} ${feeTokenSymbol ?? ''}`.trim();
@@ -210,15 +199,11 @@ export function ClaimCard({
           </dd>
         </div>
       </dl>
-      {cooldownActive && (
-        <div className="claim-tier-countdown">
-          <CountdownLabel
-            nextClaimAt={nextClaimAt}
-            onExpire={() => queryClient.invalidateQueries({ queryKey: lastClaimKey })}
-          />
+      {error && (
+        <div className="claim-tier-error" role="status" aria-live="polite">
+          {error}
         </div>
       )}
-      {error && <div className="claim-tier-error">⚠ {error}</div>}
       <button
         className="claim-btn"
         onClick={handleClick}

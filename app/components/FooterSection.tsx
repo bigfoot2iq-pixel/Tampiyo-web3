@@ -1,4 +1,10 @@
+import Link from "next/link";
 import BeretLogo from "./BeretLogo";
+
+const footerLinks = [
+  { label: "Tempo Docs", href: "https://docs.tempo.xyz/" },
+  { label: "X", href: "https://x.com/Tampiyocoin" },
+];
 
 export default function FooterSection() {
   return (
@@ -23,21 +29,32 @@ export default function FooterSection() {
           className="font-body text-sm text-smoke max-w-sm leading-relaxed"
           style={{ fontVariant: "small-caps" }}
         >
-          $TMPY is a community token. He bears no responsibility for your
-          decisions.
+          $TMPY is a community token on Tempo Mainnet. Verify contracts and claim
+          state before sending transactions.
         </p>
 
         {/* Links */}
-        <div className="flex gap-6">
-          {["Whitepaper", "Audit", "Twitter/X"].map((link) => (
+        <div className="flex flex-wrap gap-6">
+          <Link
+            href="#claim"
+            className="font-body text-sm text-smoke no-underline hover:text-ink transition-colors"
+          >
+            Claim
+          </Link>
+          {footerLinks.map((link) => (
             <a
-              key={link}
-              href="#"
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
               className="font-body text-sm text-smoke no-underline hover:text-ink transition-colors"
             >
-              {link}
+              {link.label}
             </a>
           ))}
+          <span className="font-body text-sm text-bone" aria-disabled="true">
+            Audit Pending
+          </span>
         </div>
       </div>
 

@@ -1,20 +1,29 @@
 "use client";
 
 import { useState } from "react";
+import { activeAddresses } from "@/app/lib/addresses";
+import { activeChain } from "@/app/lib/chains";
 
-const CONTRACT_ADDRESS = "To be announced at launch";
+const CONTRACT_ADDRESS = activeAddresses.tampiyo;
+const EXPLORER_BASE_URL = activeChain.blockExplorers.default.url;
 
 const tokenRows = [
-  { fraction: "40 / 100", label: "Community & Airdrop" },
-  { fraction: "30 / 100", label: "Liquidity (Locked 12 Months)" },
-  { fraction: "15 / 100", label: "Marketing" },
-  { fraction: "15 / 100", label: "Team (12-Month Lock)" },
+  { fraction: "40%", label: "Community & Claims" },
+  { fraction: "30%", label: "Tempo Liquidity" },
+  { fraction: "15%", label: "Market & Listings" },
+  { fraction: "15%", label: "Team Lock" },
 ];
+
+function isRealAddress(address: string) {
+  return /^0x[0-9a-fA-F]{40}$/.test(address);
+}
 
 export default function NumbersSection() {
   const [copied, setCopied] = useState(false);
+  const contractIsLive = isRealAddress(CONTRACT_ADDRESS);
 
   async function handleCopy() {
+    if (!contractIsLive) return;
     try {
       await navigator.clipboard.writeText(CONTRACT_ADDRESS);
       setCopied(true);
@@ -70,19 +79,36 @@ export default function NumbersSection() {
         {/* Contract address */}
         <div className="mt-12 p-6 bg-paper-2 border border-ink/10 reveal-stamp">
           <div className="text-xs text-smoke uppercase tracking-widest mb-3">
-            Contract Address
+            Tempo Contract Address
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <code className="font-mono text-ink text-sm break-all">
-              {CONTRACT_ADDRESS}
+              {contractIsLive ? CONTRACT_ADDRESS : "Revealed at launch"}
             </code>
-            <button
-              className="flex-shrink-0 btn-paper text-xs py-2 px-4"
-              onClick={handleCopy}
-              aria-label="Copy contract address"
-            >
-              {copied ? "Copied" : "Copy"}
-            </button>
+            <div className="flex flex-wrap gap-3" aria-live="polite">
+              <button
+                className="flex-shrink-0 btn-paper text-xs py-2 px-4"
+                onClick={handleCopy}
+                aria-label="Copy Tempo contract address"
+                disabled={!contractIsLive}
+              >
+                {copied ? "Copied" : "Copy"}
+              </button>
+              {contractIsLive ? (
+                <a
+                  href={`${EXPLORER_BASE_URL}/address/${CONTRACT_ADDRESS}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-paper text-xs py-2 px-4 no-underline"
+                >
+                  View Explorer
+                </a>
+              ) : (
+                <span className="inline-flex items-center border border-ink/20 px-4 py-2 text-xs uppercase tracking-widest text-smoke">
+                  Verification pending
+                </span>
+              )}
+            </div>
           </div>
         </div>
       </div>

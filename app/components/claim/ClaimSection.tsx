@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import { useAccount } from 'wagmi';
 import { ClaimCard } from './ClaimCard';
 import { CATEGORIES } from './categories';
@@ -13,25 +14,34 @@ export default function ClaimSection() {
     <section id="claim" className="claim-section">
       <div className="claim-inner">
         <div className="claim-character">
-          <img
+          <Image
             src="/panda/samurai.png"
             alt="Tampiyo Samurai"
+            width={420}
+            height={420}
             className="claim-img"
+            sizes="(max-width: 900px) 80vw, 340px"
           />
-          <div className="claim-badge">FREE CLAIM</div>
+          <div className="claim-badge">TEMPO CLAIM</div>
         </div>
 
         <div className="claim-copy">
           <div className="section-eyebrow">Airdrop</div>
           <h2 className="claim-title">
-            Claim Your <em>Free</em>
+            Claim Your <em>Tempo</em>
             <br />
             $TMPY Now
           </h2>
           <p className="claim-desc">
-            Connect your wallet, switch to Tempo, claim your tier. The panda doesn&apos;t forget his
-            loyal followers.
+            Connect your wallet, switch to Tempo Mainnet, and claim your tier.
+            Fees are paid in supported stablecoins because Tempo has no native gas token.
           </p>
+
+          <div className="claim-proof-row" aria-label="Claim requirements">
+            <span>Tempo Mainnet</span>
+            <span>Chain ID 4217</span>
+            <span>USD Fee Token</span>
+          </div>
 
           {!isConnected && (
             <div className="claim-cta-banner">
@@ -61,8 +71,8 @@ export default function ClaimSection() {
           </div>
 
           <div className="claim-note">
-            One approval per fee token (unlimited). Claims gated by per-tier cooldown. Fees paid in
-            stablecoin — Tempo has no native gas token.
+            One approval per fee token. Claims are gated by per-tier cooldowns and paid
+            through Tempo&apos;s stablecoin fee model.
           </div>
         </div>
       </div>

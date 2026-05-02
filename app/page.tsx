@@ -1,22 +1,19 @@
 "use client";
 
-import { useState } from "react";
 import Hero from "./components/Hero";
 import Manifesto from "./components/Manifesto";
 import TickerStrip from "./components/TickerStrip";
 import ClaimSection from "./components/claim/ClaimSection";
+import TempoProofSection from "./components/TempoProofSection";
 import CastSection from "./components/CastSection";
 import NumbersSection from "./components/NumbersSection";
 import PathSection from "./components/PathSection";
 import CommunitySection from "./components/CommunitySection";
 import LeaderboardPreview from "./components/LeaderboardPreview";
 import FooterSection from "./components/FooterSection";
-import ClaimModal from "./components/ClaimModal";
 import { useScrollReveal } from "./components/useScrollReveal";
 
 export default function Home() {
-  const [modalOpen, setModalOpen] = useState(false);
-
   useScrollReveal();
 
   return (
@@ -42,18 +39,19 @@ export default function Home() {
         </defs>
       </svg>
 
-       <Hero />
-      <Manifesto />
-      <TickerStrip />
-       <ClaimSection />
-      <CastSection />
-      <NumbersSection />
-      <PathSection />
-      <CommunitySection />
-      <LeaderboardPreview />
+      <main id="main">
+        <Hero />
+        <Manifesto />
+        <TickerStrip />
+        <ClaimSection />
+        <TempoProofSection />
+        <CastSection />
+        <NumbersSection />
+        <PathSection />
+        <CommunitySection />
+        <LeaderboardPreview />
+      </main>
       <FooterSection />
-
-      <ClaimModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 export default function ClaimSection({ onClaim }: { onClaim: () => void }) {
@@ -13,10 +14,12 @@ export default function ClaimSection({ onClaim }: { onClaim: () => void }) {
       <div className="max-w-[1100px] mx-auto flex flex-col lg:flex-row items-center gap-16 lg:gap-20">
         {/* Samurai panda — anchored with tape */}
         <div className="relative flex-shrink-0 reveal-stamp">
-          <img
+          <Image
             src="/panda/samurai.png"
             alt=""
             className="block"
+            width={220}
+            height={220}
             style={{ width: 220, height: "auto" }}
             loading="lazy"
           />
@@ -75,17 +78,17 @@ export default function ClaimSection({ onClaim }: { onClaim: () => void }) {
                 htmlFor="claim-wallet"
                 className="block text-xs text-smoke uppercase tracking-widest mb-3"
               >
-                Your Ethereum Address
+                Your Tempo Wallet Address
               </label>
               <input
                 id="claim-wallet"
                 type="text"
                 value={wallet}
                 onChange={(e) => setWallet(e.target.value)}
-                placeholder="0x..."
+                placeholder="0x1234...abcd…"
                 autoComplete="off"
-                aria-label="Ethereum wallet address"
-                className="w-full bg-transparent border-0 border-b-2 border-ink/30 pb-3 font-mono text-ink text-sm placeholder:text-bone focus:border-ink focus:outline-none transition-colors"
+                aria-label="Tempo wallet address"
+                className="w-full bg-transparent border-0 border-b-2 border-ink/30 pb-3 font-mono text-ink text-sm placeholder:text-bone focus:border-ink transition-colors"
               />
             </div>
 
@@ -100,8 +103,8 @@ export default function ClaimSection({ onClaim }: { onClaim: () => void }) {
           </div>
 
           <p className="text-xs text-smoke mt-6 leading-relaxed">
-            One claim per wallet. Gas is on you. Don&apos;t make him repeat
-            himself.
+            One claim per wallet. Tempo uses stablecoin fees instead of a native
+            gas token. Don&apos;t make him repeat himself.
           </p>
         </div>
       </div>

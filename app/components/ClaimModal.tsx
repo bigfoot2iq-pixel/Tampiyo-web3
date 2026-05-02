@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect, useRef, useCallback } from "react";
 
 export default function ClaimModal({
@@ -87,7 +88,7 @@ export default function ClaimModal({
       return;
     }
     if (!isValidAddress(wallet)) {
-      alert("Please enter a valid Ethereum address (0x...).");
+      alert("Please enter a valid Tempo wallet address.");
       return;
     }
     setStep(2);
@@ -145,9 +146,11 @@ export default function ClaimModal({
         {/* Step 1: Enter wallet */}
         {step === 1 && (
           <div className="flex flex-col items-center gap-6">
-            <img
+            <Image
               src="/panda/king.png"
               alt=""
+              width={96}
+              height={96}
               className="w-24 h-24 object-contain"
               style={{
                 animation: "float 4s ease-in-out infinite",
@@ -160,8 +163,7 @@ export default function ClaimModal({
               </span>
             </h2>
             <p className="font-body text-sm text-smoke text-center leading-relaxed">
-              Enter your Ethereum wallet address to claim your free 10,000
-              $TMPY tokens.
+              Enter your Tempo wallet address to claim your $TMPY allocation.
             </p>
 
             {/* Progress bar */}
@@ -176,16 +178,16 @@ export default function ClaimModal({
                 htmlFor="modal-wallet"
                 className="block text-xs text-smoke uppercase tracking-widest mb-3"
               >
-                Your ETH Wallet Address
+                Your Tempo Wallet Address
               </label>
               <input
                 id="modal-wallet"
                 type="text"
                 value={wallet}
                 onChange={(e) => setWallet(e.target.value)}
-                placeholder="0x1234...abcd"
+                placeholder="0x1234...abcd…"
                 autoComplete="off"
-                className="w-full bg-paper-2 border border-ink/15 px-4 py-3 font-mono text-ink text-sm placeholder:text-bone focus:border-ink focus:outline-none transition-colors"
+                className="w-full bg-paper-2 border border-ink/15 px-4 py-3 font-mono text-ink text-sm placeholder:text-bone focus:border-ink transition-colors"
               />
             </div>
 
@@ -235,7 +237,7 @@ export default function ClaimModal({
                   Gas fee (est.)
                 </span>
                 <span className="font-body text-sm text-ink-soft">
-                  ~$2–5 in ETH
+                  Paid in supported USD stables
                 </span>
               </div>
             </div>
@@ -252,9 +254,11 @@ export default function ClaimModal({
         {/* Step 3: Success */}
         {step === 3 && (
           <div className="flex flex-col items-center gap-6 text-center">
-            <img
+            <Image
               src="/panda/king.png"
               alt=""
+              width={96}
+              height={96}
               className="w-24 h-24 object-contain"
             />
             <div

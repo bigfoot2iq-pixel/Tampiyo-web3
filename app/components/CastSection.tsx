@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const characters = [
   {
     name: "The King",
@@ -73,10 +75,12 @@ export default function CastSection() {
             >
               {/* Character image */}
               <div className="cast-img-wrap relative bg-paper-2 overflow-hidden">
-                <img
+                <Image
                   src={char.img}
                   alt={char.name}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover"
                   loading="lazy"
                 />
               </div>

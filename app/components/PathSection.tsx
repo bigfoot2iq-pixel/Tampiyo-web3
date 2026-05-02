@@ -4,10 +4,10 @@ const phases = [
     label: "Phase 01 · Live Now",
     title: "Awakening",
     items: [
-      { text: "Token contract deployment", done: true },
-      { text: "Website + social launch", done: true },
-      { text: "Community airdrop (10K per wallet)", done: true },
-      { text: "Uniswap V3 listing", done: false },
+      { text: "Tempo contract deployment", done: true },
+      { text: "Website and X launch", done: true },
+      { text: "Tiered Tempo claim portal", done: true },
+      { text: "Explorer verification", done: false },
     ],
     torn: "minimal",
   },
@@ -16,10 +16,10 @@ const phases = [
     label: "Phase 02 · Upcoming",
     title: "Uprising",
     items: [
-      { text: "CEX listing applications", done: false },
-      { text: "Tampiyo NFT collection mint", done: false },
-      { text: "Holder staking rewards", done: false },
-      { text: "X/Twitter raid campaigns", done: false },
+      { text: "Liquidity proof and lock receipt", done: false },
+      { text: "Claim leaderboard", done: false },
+      { text: "Tempo fee-token onboarding guide", done: false },
+      { text: "Community distribution report", done: false },
     ],
     torn: "medium",
   },
@@ -29,7 +29,7 @@ const phases = [
     title: "",
     items: [],
     torn: "heavy",
-    note: "TBD — depends on his mood",
+    note: "More phases unlock after the claim data is public",
   },
 ];
 
@@ -102,6 +102,7 @@ export default function PathSection() {
                             height="12"
                             viewBox="0 0 12 12"
                             fill="none"
+                            aria-hidden="true"
                           >
                             <path
                               d="M2 6L5 9L10 3"

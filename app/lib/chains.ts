@@ -24,3 +24,6 @@ export const tempoTestnet = defineChain({
   },
   testnet: true,
 });
+
+export const useTestnet = process.env.NEXT_PUBLIC_USE_TESTNET === 'true';
+export const activeChain = useTestnet ? tempoTestnet : tempoMainnet;
