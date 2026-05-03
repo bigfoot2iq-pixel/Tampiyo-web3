@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function CommunitySection() {
   return (
-    <section className="relative overflow-hidden bg-charcoal px-5 py-20 sm:px-6 sm:py-24 md:px-12 md:py-40">
+    <section id="movement" className="relative overflow-hidden bg-charcoal px-5 py-20 sm:px-6 sm:py-24 md:px-12 md:py-40">
       {/* Halftone overlay */}
       <div className="absolute inset-0 halftone" />
 

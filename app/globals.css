@@ -544,13 +544,24 @@ body::before {
 .claim-section {
   padding: 96px 24px;
   position: relative;
-  background: var(--color-paper);
+  background: var(--color-charcoal);
+  color: var(--color-paper);
   overflow: hidden;
-  border-top: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
-  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
+}
+
+.claim-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, var(--color-ink) 0.5px, transparent 0.5px);
+  background-size: 4px 4px;
+  opacity: 0.06;
 }
 
 .claim-inner {
+  position: relative;
+  z-index: 1;
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
@@ -575,8 +586,7 @@ body::before {
   max-width: 340px;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 0 40px color-mix(in srgb, var(--color-gold) 25%, transparent));
-  animation: float 5s ease-in-out infinite;
+  filter: drop-shadow(0 0 48px color-mix(in srgb, var(--color-gold) 34%, transparent));
 }
 
 .claim-badge {
@@ -607,9 +617,9 @@ body::before {
 }
 
 .claim-proof-row span {
-  border: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
-  background: color-mix(in srgb, var(--color-gold) 8%, var(--color-paper));
-  color: var(--color-ink-soft);
+  border: 1px solid color-mix(in srgb, var(--color-paper) 20%, transparent);
+  background: color-mix(in srgb, var(--color-gold) 12%, var(--color-ink));
+  color: var(--color-paper);
   padding: 7px 10px;
   font-family: var(--font-mono);
   font-size: 11px;
@@ -621,7 +631,7 @@ body::before {
 .section-eyebrow {
   font-family: var(--font-stencil);
   font-size: 12px;
-  color: var(--color-gold-deep);
+  color: var(--color-gold);
   text-transform: uppercase;
   letter-spacing: 0.16em;
   font-weight: 700;
@@ -634,7 +644,7 @@ body::before {
   content: '';
   width: 24px;
   height: 1px;
-  background: var(--color-gold-deep);
+  background: var(--color-gold);
 }
 
 .claim-title {
@@ -643,7 +653,7 @@ body::before {
   font-size: 42px;
   line-height: 1.05;
   letter-spacing: 0;
-  color: var(--color-ink);
+  color: var(--color-paper);
 }
 
 @media (min-width: 900px) {
@@ -658,7 +668,7 @@ body::before {
 }
 
 .claim-desc {
-  color: var(--color-ink-soft);
+  color: var(--color-bone);
   font-size: 16px;
   line-height: 1.7;
 }
@@ -833,7 +843,7 @@ body::before {
 
 .claim-note {
   font-size: 11px;
-  color: var(--color-smoke);
+  color: var(--color-bone);
   line-height: 1.6;
   font-style: italic;
 }

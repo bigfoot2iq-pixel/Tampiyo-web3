@@ -1,37 +1,70 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
-// TODO: wire LeaderboardPreview.tsx to this route — component contract: { holders: { address, balance }[] }
-
-// force-dynamic: Supabase URL absent at build time; live leaderboard data is always request-scoped.
-// revalidate = 60 from PLAN.md omitted — ISR pre-renders at build time which fails without env vars.
 export const dynamic = "force-dynamic";
 
-const CLAIM_ADDRESS = "0x2E9e441983448B923cC859867252237494daDe23".toLowerCase();
+const CLAIM_ADDRESS = "0x2E9e441983448B923cC859867252237494daDe23";
 const ZERO = "0x0000000000000000000000000000000000000000";
 
-// Lazy-init: env vars absent at build time; defer until first request.
 function getSupabase() {
   return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_KEY!,
     { auth: { persistSession: false } }
   );
 }
 
-export async function GET() {
+function isFiltered(address: string) {
+  const lc = address.toLowerCase();
+  return lc === CLAIM_ADDRESS.toLowerCase() || lc === ZERO;
+}
+
+async function getAllHolders() {
   const { data, error } = await getSupabase()
     .from("tampiyo_balances")
     .select("address, balance")
     .gt("balance", 0)
     .order("balance", { ascending: false })
-    .limit(100);
+    .limit(500);
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) throw error;
+  return (data ?? []).filter((r) => !isFiltered(r.address));
+}
 
-  const filtered = (data ?? []).filter(
-    (r) => r.address.toLowerCase() !== CLAIM_ADDRESS && r.address.toLowerCase() !== ZERO
-  );
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const address = searchParams.get("address");
 
-  return NextResponse.json({ holders: filtered });
+  try {
+    const all = await getAllHolders();
+
+    if (address) {
+      const idx = all.findIndex(
+        (r) => r.address.toLowerCase() === address.toLowerCase()
+      );
+      if (idx === -1) return NextResponse.json({ holder: null });
+      return NextResponse.json({
+        holder: { ...all[idx], rank: idx + 1 },
+      });
+    }
+
+    const page = Math.max(1, parseInt(searchParams.get("page") ?? "1"));
+    const limit = Math.min(50, Math.max(1, parseInt(searchParams.get("limit") ?? "25")));
+    const offset = (page - 1) * limit;
+
+    const holders = all.slice(offset, offset + limit).map((h, i) => ({
+      ...h,
+      rank: offset + i + 1,
+    }));
+
+    return NextResponse.json({
+      holders,
+      total: all.length,
+      page,
+      limit,
+    });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "unknown error";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
 }

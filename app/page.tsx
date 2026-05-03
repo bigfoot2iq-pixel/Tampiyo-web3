@@ -1,13 +1,8 @@
 "use client";
 
 import Hero from "./components/Hero";
-import Manifesto from "./components/Manifesto";
-import TickerStrip from "./components/TickerStrip";
 import ClaimSection from "./components/claim/ClaimSection";
-import TempoProofSection from "./components/TempoProofSection";
 import CastSection from "./components/CastSection";
-import NumbersSection from "./components/NumbersSection";
-import PathSection from "./components/PathSection";
 import CommunitySection from "./components/CommunitySection";
 import LeaderboardPreview from "./components/LeaderboardPreview";
 import FooterSection from "./components/FooterSection";
@@ -41,15 +36,10 @@ export default function Home() {
 
       <main id="main">
         <Hero />
-        <Manifesto />
-        <TickerStrip />
         <ClaimSection />
-        <TempoProofSection />
-        <CastSection />
-        <NumbersSection />
-        <PathSection />
-        <CommunitySection />
         <LeaderboardPreview />
+        <CastSection />
+        <CommunitySection />
       </main>
       <FooterSection />
     </>

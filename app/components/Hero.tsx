@@ -64,8 +64,8 @@ export default function Hero() {
         </Link>
         <div className="landing-nav-links hidden items-center gap-6 font-body text-xs uppercase tracking-widest md:flex">
           <Link href="#claim" className="text-paper/80 no-underline hover:text-gold transition-colors">Claim</Link>
-          <Link href="#tempo" className="text-paper/80 no-underline hover:text-gold transition-colors">Tempo</Link>
-          <Link href="#tokenomics" className="text-paper/80 no-underline hover:text-gold transition-colors">Tokenomics</Link>
+          <Link href="#leaderboard" className="text-paper/80 no-underline hover:text-gold transition-colors">Leaderboard</Link>
+          <Link href="#characters" className="text-paper/80 no-underline hover:text-gold transition-colors">Universe</Link>
         </div>
         <div className="flex flex-shrink-0 justify-end">
           <ConnectButton compact />
@@ -129,8 +129,8 @@ export default function Hero() {
           <Link className="btn-ink btn-ink-gold text-center text-xs no-underline sm:text-sm" href="#claim">
             Claim $TAMPIYO on Tempo -&gt;
           </Link>
-          <Link className="btn-paper text-center text-xs no-underline sm:text-sm" href="#tempo">
-            Verify Network
+          <Link className="btn-paper text-center text-xs no-underline sm:text-sm" href="#leaderboard">
+            See Leaderboard
           </Link>
         </div>
 
