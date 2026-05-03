@@ -41,9 +41,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TAMPIYO - $TMPY on Tempo",
+  title: "TAMPIYO - $TAMPIYO on Tempo",
   description:
-    "$TMPY is the grumpy panda token on Tempo Mainnet, built around stable-fee claims and Tempo's payment-first network.",
+    "$TAMPIYO is the grumpy panda token on Tempo Mainnet, built around stable-fee claims and Tempo's payment-first network.",
 };
 
 export default function RootLayout({

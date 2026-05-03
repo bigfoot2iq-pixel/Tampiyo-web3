@@ -35,16 +35,15 @@ const phases = [
 
 export default function PathSection() {
   return (
-    <section id="roadmap" className="py-28 md:py-36 px-6 md:px-12 bg-paper">
+    <section id="roadmap" className="bg-paper px-5 py-20 sm:px-6 sm:py-24 md:px-12 md:py-36">
       <div className="max-w-[800px] mx-auto">
         {/* Section header */}
-        <div className="mb-16 reveal-stamp">
+        <div className="mb-10 reveal-stamp sm:mb-12 md:mb-16">
           <div className="font-stencil text-xs text-smoke uppercase tracking-widest mb-4">
             Roadmap
           </div>
           <h2
-            className="font-display font-bold text-ink leading-[0.9] tracking-tight"
-            style={{ fontSize: "clamp(28px, 4vw, 48px)" }}
+            className="font-display text-[32px] font-bold leading-[0.94] text-ink sm:text-[40px] lg:text-[48px]"
           >
             If he{" "}
             <span className="font-marker text-gold" style={{ fontSize: "0.85em" }}>
@@ -58,7 +57,7 @@ export default function PathSection() {
           {phases.map((phase, idx) => (
             <div
               key={phase.phase}
-              className={`relative bg-paper border border-ink/15 p-6 md:p-8 reveal-stamp shadow-hard-sm ${
+              className={`journal-page relative border border-ink/15 bg-paper p-5 shadow-hard-sm reveal-stamp sm:p-6 md:p-8 ${
                 idx === 1 ? "md:ml-6" : idx === 2 ? "md:ml-12" : ""
               }`}
               style={{
@@ -72,8 +71,7 @@ export default function PathSection() {
 
               {phase.title && (
                 <h3
-                  className="font-display font-bold text-ink mb-6"
-                  style={{ fontSize: "clamp(22px, 3vw, 32px)" }}
+                  className="mb-6 font-display text-[24px] font-bold text-ink sm:text-[28px] lg:text-[32px]"
                 >
                   {phase.title}
                 </h3>

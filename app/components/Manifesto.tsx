@@ -1,13 +1,12 @@
 export default function Manifesto() {
   return (
-    <section className="relative bg-charcoal py-32 md:py-40 px-6 md:px-12 overflow-hidden">
+    <section className="relative overflow-hidden bg-charcoal px-5 py-20 sm:px-6 sm:py-24 md:px-12 md:py-40">
       {/* Halftone overlay */}
       <div className="absolute inset-0 halftone" />
 
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         <p
-          className="font-display font-bold text-paper leading-[0.95] tracking-tight"
-          style={{ fontSize: "clamp(28px, 4.5vw, 64px)" }}
+          className="font-display text-[30px] font-bold leading-[0.98] text-paper sm:text-[42px] lg:text-[64px]"
         >
           He doesn&apos;t care if you ape in.
           <br />

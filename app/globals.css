@@ -29,6 +29,9 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 96px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 
@@ -39,6 +42,8 @@ body {
   font-size: 16px;
   line-height: 1.6;
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
   cursor: default;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -48,6 +53,13 @@ body {
 a,
 button {
   touch-action: manipulation;
+}
+
+img,
+svg,
+canvas,
+video {
+  max-width: 100%;
 }
 
 .skip-link {
@@ -177,7 +189,7 @@ body::before {
 
 .wallet-button {
   display: inline-flex;
-  min-height: 40px;
+  min-height: 44px;
   align-items: center;
   justify-content: center;
   gap: 8px;
@@ -257,6 +269,12 @@ body::before {
   box-shadow: 3px 3px 0 var(--color-ink);
 }
 
+.wallet-button-compact {
+  min-width: 94px;
+  min-height: 44px;
+  padding: 9px 12px;
+}
+
 .wallet-chain-icon {
   width: 18px;
   height: 18px;
@@ -274,19 +292,114 @@ body::before {
   text-overflow: ellipsis;
 }
 
+@media (max-width: 767px) {
+  .landing-nav {
+    align-items: center !important;
+    box-sizing: border-box;
+    display: flex !important;
+    gap: 10px;
+    justify-content: space-between !important;
+    max-width: 100vw;
+    width: 100%;
+  }
+
+  .landing-nav-links {
+    display: none !important;
+  }
+
+  .landing-nav > a {
+    flex: 1 1 auto;
+    max-width: calc(100% - 112px);
+    overflow: hidden;
+    width: auto;
+  }
+
+  .landing-nav .wallet-button {
+    max-width: 104px;
+  }
+
+  .landing-nav > :last-child {
+    flex: 0 0 auto;
+    margin-left: auto;
+    min-width: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .landing-nav-links {
+    display: flex;
+  }
+}
+
 @media (max-width: 640px) {
+  html {
+    scroll-padding-top: 72px;
+  }
+
+  .hero-brand-text {
+    letter-spacing: 0.08em !important;
+  }
+
+  .hero-actions .btn-ink,
+  .hero-actions .btn-paper {
+    width: calc(100% - 3px);
+    min-height: 44px;
+    padding: 12px 16px;
+  }
+
+  .btn-ink {
+    box-shadow: 2px 2px 0 var(--color-ink);
+  }
+
+  .btn-ink-gold {
+    box-shadow: 2px 2px 0 var(--color-gold-deep);
+  }
+
+  .shadow-hard {
+    box-shadow: 2px 2px 0 var(--color-ink);
+  }
+
+  .shadow-hard-sm {
+    box-shadow: 1px 1px 0 var(--color-ink);
+  }
+
   .wallet-button-group {
     gap: 5px;
   }
 
   .wallet-button {
-    min-height: 38px;
-    padding: 9px 10px;
-    font-size: 11px;
+    min-height: 44px;
+    padding: 8px 9px;
+    font-size: 10px;
+    letter-spacing: 0.04em;
   }
 
   .wallet-account-name {
     max-width: 88px;
+  }
+
+  .wallet-chain-name {
+    max-width: 78px;
+  }
+
+  .wallet-button-placeholder {
+    width: 96px;
+  }
+}
+
+@media (max-width: 380px) {
+  .landing-nav {
+    padding-inline: 12px !important;
+  }
+
+  .wallet-button {
+    padding-inline: 8px;
+  }
+}
+
+@media (max-width: 340px) {
+  .hero-brand-text {
+    display: none;
   }
 }
 
@@ -404,6 +517,11 @@ body::before {
   }
   /* Reset any grid-area on mobile so cards stack */
   .cast-card { grid-area: auto !important; }
+
+  .cast-card {
+    transform: none !important;
+    box-shadow: 2px 2px 0 var(--color-ink) !important;
+  }
 }
 
 @media (min-width: 768px) {
@@ -522,10 +640,16 @@ body::before {
 .claim-title {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(36px, 4vw, 54px);
+  font-size: 42px;
   line-height: 1.05;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   color: var(--color-ink);
+}
+
+@media (min-width: 900px) {
+  .claim-title {
+    font-size: 54px;
+  }
 }
 
 .claim-title em {
@@ -583,7 +707,7 @@ body::before {
   gap: 14px;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 760px) {
   .claim-tier-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
@@ -620,7 +744,7 @@ body::before {
   font-weight: 800;
   font-size: 28px;
   color: var(--color-ink);
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   line-height: 1;
 }
 
@@ -714,6 +838,87 @@ body::before {
   font-style: italic;
 }
 
+@media (max-width: 640px) {
+  .claim-section {
+    padding: 72px 20px;
+  }
+
+  .claim-inner {
+    gap: 32px;
+  }
+
+  .claim-character {
+    order: 2;
+  }
+
+  .claim-copy {
+    order: 1;
+  }
+
+  .claim-img {
+    max-width: 220px;
+  }
+
+  .claim-badge {
+    top: 4px;
+    right: 50%;
+    transform: translateX(50%);
+    white-space: nowrap;
+  }
+
+  .section-eyebrow {
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+  }
+
+  .section-eyebrow::before {
+    width: 18px;
+  }
+
+  .claim-title {
+    font-size: 34px;
+    line-height: 1;
+  }
+
+  .claim-desc {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .claim-proof-row span {
+    flex: 1 1 calc(50% - 8px);
+    text-align: center;
+  }
+
+  .claim-cta-banner,
+  .claim-warn-banner {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 14px;
+    box-shadow: 2px 2px 0 var(--color-ink);
+  }
+
+  .claim-warn-banner {
+    box-shadow: 2px 2px 0 var(--color-gold-deep);
+  }
+
+  .claim-cta-banner .wallet-button,
+  .claim-cta-banner .wallet-button-group,
+  .claim-warn-btn {
+    width: 100%;
+  }
+
+  .claim-tier-card {
+    padding: 16px;
+    box-shadow: 2px 2px 0 var(--color-ink);
+  }
+
+  .claim-tier-amount {
+    font-size: 25px;
+  }
+}
+
 /* ── Tempo proof section ── */
 .tempo-proof-grid {
   display: grid;
@@ -739,6 +944,19 @@ body::before {
   justify-content: space-between;
   gap: 20px;
   box-shadow: 4px 4px 0 color-mix(in srgb, var(--color-gold) 55%, transparent);
+}
+
+@media (max-width: 640px) {
+  .tempo-proof-card {
+    min-height: auto;
+    gap: 16px;
+    padding: 20px;
+    box-shadow: 2px 2px 0 color-mix(in srgb, var(--color-gold) 55%, transparent);
+  }
+
+  .journal-page {
+    transform: none !important;
+  }
 }
 
 /* ── Reduced motion ── */

@@ -30,7 +30,7 @@ export default function ClaimSection() {
           <h2 className="claim-title">
             Claim Your <em>Tempo</em>
             <br />
-            $TMPY Now
+            $TAMPIYO Now
           </h2>
           <p className="claim-desc">
             Connect your wallet, switch to Tempo Mainnet, and claim your tier.

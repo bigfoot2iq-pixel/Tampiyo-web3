@@ -8,11 +8,11 @@ const footerLinks = [
 
 export default function FooterSection() {
   return (
-    <footer className="bg-paper py-12 px-6 md:px-12">
+    <footer className="bg-paper px-5 py-10 sm:px-6 md:px-12 md:py-12">
       {/* Ink horizontal rule */}
       <hr className="border-0 h-[2px] bg-ink/80 mb-12" />
 
-      <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+      <div className="mx-auto flex max-w-[1200px] flex-col items-start justify-between gap-7 md:flex-row md:items-center md:gap-8">
         {/* Logo */}
         <div className="flex items-center gap-3 text-ink">
           <BeretLogo size={32} />
@@ -29,12 +29,12 @@ export default function FooterSection() {
           className="font-body text-sm text-smoke max-w-sm leading-relaxed"
           style={{ fontVariant: "small-caps" }}
         >
-          $TMPY is a community token on Tempo Mainnet. Verify contracts and claim
+          $TAMPIYO is a community token on Tempo Mainnet. Verify contracts and claim
           state before sending transactions.
         </p>
 
         {/* Links */}
-        <div className="flex flex-wrap gap-6">
+        <div className="flex flex-wrap gap-x-6 gap-y-3">
           <Link
             href="#claim"
             className="font-body text-sm text-smoke no-underline hover:text-ink transition-colors"

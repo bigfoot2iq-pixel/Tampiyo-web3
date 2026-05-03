@@ -44,8 +44,7 @@ export default function ClaimSection({ onClaim }: { onClaim: () => void }) {
           </div>
 
           <h2
-            className="font-display font-bold text-ink leading-[0.95] tracking-tight mb-6"
-            style={{ fontSize: "clamp(28px, 4vw, 48px)" }}
+            className="mb-6 font-display text-[30px] font-bold leading-[0.98] text-ink sm:text-[40px] lg:text-[48px]"
           >
             Take the tokens.
             <br />
@@ -64,11 +63,10 @@ export default function ClaimSection({ onClaim }: { onClaim: () => void }) {
                 Your Claimable Amount
               </div>
               <div
-                className="font-display font-bold text-ink"
-                style={{ fontSize: "clamp(36px, 5vw, 56px)" }}
+                className="font-display text-[38px] font-bold text-ink sm:text-[48px] lg:text-[56px]"
               >
                 10,000{" "}
-                <sup className="text-smoke font-body text-lg">$TMPY</sup>
+                <sup className="text-smoke font-body text-lg">$TAMPIYO</sup>
               </div>
             </div>
 
@@ -97,7 +95,7 @@ export default function ClaimSection({ onClaim }: { onClaim: () => void }) {
               className="btn-ink btn-ink-gold w-full text-base py-4"
               onClick={onClaim}
             >
-              Claim 10,000 $TMPY
+              Claim 10,000 $TAMPIYO
             </button>
           </div>
           </div>

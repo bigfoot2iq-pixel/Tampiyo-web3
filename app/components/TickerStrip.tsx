@@ -1,5 +1,5 @@
 const tickerData = [
-  { label: "$TMPY", value: "ERC-20 Token" },
+  { label: "$TAMPIYO", value: "ERC-20 Token" },
   { label: "SUPPLY", value: "1,000,000,000" },
   { label: "TAX", value: "0%" },
   { label: "AIRDROP", value: "Tiered claim" },
@@ -20,7 +20,7 @@ export default function TickerStrip() {
         {[...tickerData, ...tickerData].map((item, i) => (
           <div
             key={i}
-            className="flex items-center gap-4 px-10 font-mono text-xs text-smoke flex-shrink-0"
+            className="flex flex-shrink-0 items-center gap-3 px-6 font-mono text-xs text-smoke sm:gap-4 sm:px-10"
           >
             <span className="w-1.5 h-1.5 bg-ink/40 rounded-full" aria-hidden="true" />
             <strong className="text-ink">{item.label}</strong>

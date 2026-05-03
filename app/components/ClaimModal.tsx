@@ -122,7 +122,7 @@ export default function ClaimModal({
       }}
       role="dialog"
       aria-modal="true"
-      aria-label="Claim $TMPY tokens"
+      aria-label="Claim $TAMPIYO tokens"
     >
       <div
         ref={modalRef}
@@ -159,11 +159,11 @@ export default function ClaimModal({
             <h2 className="font-display font-bold text-ink text-3xl text-center leading-tight">
               Claim{" "}
               <span className="font-marker text-gold" style={{ fontSize: "0.85em" }}>
-                $TMPY
+                $TAMPIYO
               </span>
             </h2>
             <p className="font-body text-sm text-smoke text-center leading-relaxed">
-              Enter your Tempo wallet address to claim your $TMPY allocation.
+              Enter your Tempo wallet address to claim your $TAMPIYO allocation.
             </p>
 
             {/* Progress bar */}
@@ -229,7 +229,7 @@ export default function ClaimModal({
                   You will receive
                 </span>
                 <span className="font-display font-bold text-gold text-lg">
-                  10,000 $TMPY
+                  10,000 $TAMPIYO
                 </span>
               </div>
               <div className="flex justify-between items-center">
@@ -271,7 +271,7 @@ export default function ClaimModal({
               Claim Submitted!
             </h2>
             <p className="font-body text-sm text-smoke leading-relaxed">
-              Your 10,000 $TMPY will arrive within 24 hours. The panda
+              Your 10,000 $TAMPIYO will arrive within 24 hours. The panda
               approves.
             </p>
             <code className="font-mono text-xs text-smoke bg-paper-2 px-4 py-3 break-all w-full text-center">

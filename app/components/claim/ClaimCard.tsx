@@ -176,7 +176,7 @@ export function ClaimCard({
   } else if (needsApproval) {
     btnLabel = `Approve ${feeTokenSymbol ?? 'Token'}`;
   } else {
-    btnLabel = `Claim ${amountStr} TMPY`;
+    btnLabel = `Claim ${amountStr} TAMPIYO`;
   }
 
   return (
@@ -184,7 +184,7 @@ export function ClaimCard({
       <div className="claim-tier-header">
         <span className="claim-tier-label">{label}</span>
         <span className="claim-tier-amount">
-          {amountStr} <sup>TMPY</sup>
+          {amountStr} <sup>TAMPIYO</sup>
         </span>
       </div>
       <dl className="claim-tier-meta">

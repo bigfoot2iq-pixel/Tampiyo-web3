@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import BeretLogo from "./BeretLogo";
 import { ConnectButton } from "./ConnectButton";
 
 const petals = [
@@ -16,7 +17,7 @@ const petals = [
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen overflow-hidden bg-paper">
+    <section className="relative min-h-[100svh] overflow-hidden bg-paper md:min-h-screen">
       {/* Sakura petals */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         {petals.map((p) => (
@@ -48,25 +49,19 @@ export default function Hero() {
       </div>
 
       {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-100 flex items-center justify-between px-12 py-5"
+      <nav className="landing-nav fixed top-0 left-0 right-0 z-[100] flex items-center justify-between gap-3 px-4 py-3 sm:px-5 md:px-12 md:py-5"
         style={{ background: 'linear-gradient(to bottom, rgba(10,10,11,0.95) 0%, transparent 100%)', backdropFilter: 'blur(2px)' }}
       >
-        <Link href="/" className="flex items-center gap-3 text-ink no-underline" aria-label="Tampiyo home">
-          <Image
-            src="/panda/samurai.png"
-            alt="Tampiyo"
-            width={32}
-            height={32}
-            className="rounded overflow-hidden object-cover"
-          />
+        <Link href="/" className="flex min-w-0 items-center gap-2 text-ink no-underline sm:gap-3" aria-label="Tampiyo home">
+          <BeretLogo size={32} className="flex-shrink-0 text-ink" />
           <span
-            className="font-stencil text-gold text-xl uppercase"
-            style={{ letterSpacing: "0.18em", textShadow: "2px 2px 0 #8E6A14" }}
+            className="hero-brand-text whitespace-nowrap font-stencil text-base text-gold uppercase md:text-xl"
+            style={{ letterSpacing: "0.12em", textShadow: "1px 1px 0 #8E6A14" }}
           >
             TAMPIYO
           </span>
         </Link>
-        <div className="hidden md:flex items-center gap-6 font-body text-xs uppercase tracking-widest">
+        <div className="landing-nav-links hidden items-center gap-6 font-body text-xs uppercase tracking-widest md:flex">
           <Link href="#claim" className="text-paper/80 no-underline hover:text-gold transition-colors">
             Claim
           </Link>
@@ -77,31 +72,15 @@ export default function Hero() {
             Tokenomics
           </Link>
         </div>
-        <ConnectButton />
+        <div className="flex flex-shrink-0 justify-end">
+          <ConnectButton compact />
+        </div>
       </nav>
 
       {/* Main hero content */}
-      <div className="relative z-10 flex flex-col justify-center min-h-screen pt-32 pb-16 px-6 md:pl-16 lg:pl-24 xl:pl-32 w-full md:w-1/2">
-
-        <div className="flex items-center gap-3 text-ink mb-12" style={{ visibility: 'hidden' }} aria-hidden="true">
-          <Image
-            src="/panda/samurai.png"
-            alt="Tampiyo"
-            width={36}
-            height={36}
-            className="rounded-full overflow-hidden object-cover"
-          />
-          <span
-            className="font-stencil text-gold text-2xl uppercase"
-            style={{ letterSpacing: "0.18em", textShadow: "2px 2px 0 #8E6A14" }}
-          >
-            TAMPIYO
-          </span>
-        </div>
-
+      <div className="relative z-10 flex min-h-[100svh] w-full flex-col justify-center px-5 pb-10 pt-24 sm:px-6 sm:pt-28 md:min-h-screen md:w-1/2 md:pb-16 md:pl-16 md:pt-32 lg:pl-24 xl:pl-32">
         <h1
-          className="font-display font-bold leading-[0.93] tracking-tight text-ink"
-          style={{ fontSize: "clamp(48px, 5vw, 80px)" }}
+          className="font-display text-[44px] font-bold leading-[0.96] text-ink sm:text-[54px] md:text-[60px] lg:text-[72px] xl:text-[80px]"
         >
           <span className="ink-wipe block" style={{ animationDelay: "0.1s" }}>
             A grumpy panda.
@@ -118,27 +97,27 @@ export default function Hero() {
         </h1>
 
         <p
-          className="font-body text-ink-soft mt-10 max-w-xs text-sm leading-loose opacity-0"
+          className="font-body mt-7 max-w-[18rem] text-[15px] leading-7 text-ink-soft opacity-0 sm:mt-8 sm:max-w-xs"
           style={{ animation: "fadeSlideUp 0.6s 0.7s ease forwards" }}
         >
-          <strong className="text-ink" translate="no">$TMPY</strong> on Tempo Mainnet.
+          <strong className="text-ink" translate="no">$TAMPIYO</strong> on Tempo Mainnet.
           Stable-fee claims, no native gas token, no fake complexity.
         </p>
 
         <div
-          className="mt-8 flex flex-col sm:flex-row gap-3 opacity-0"
+          className="hero-actions mt-7 flex flex-col gap-3 opacity-0 sm:mt-8 sm:flex-row"
           style={{ animation: "fadeSlideUp 0.6s 0.9s ease forwards" }}
         >
-          <Link className="btn-ink btn-ink-gold text-sm no-underline text-center" href="#claim">
-            Claim $TMPY on Tempo -&gt;
+          <Link className="btn-ink btn-ink-gold text-center text-xs no-underline sm:text-sm" href="#claim">
+            Claim $TAMPIYO on Tempo -&gt;
           </Link>
-          <Link className="btn-paper text-sm no-underline text-center" href="#tempo">
+          <Link className="btn-paper text-center text-xs no-underline sm:text-sm" href="#tempo">
             Verify Network
           </Link>
         </div>
 
         <div
-          className="mt-12 grid grid-cols-3 w-fit font-body opacity-0 border-y border-ink/20 divide-x divide-ink/15"
+          className="mt-8 grid w-full max-w-[20rem] grid-cols-3 divide-x divide-ink/15 border-y border-ink/20 font-body opacity-0 sm:mt-10 sm:w-fit"
           style={{ animation: "fadeSlideUp 0.6s 1.1s ease forwards" }}
         >
           {[
@@ -146,7 +125,7 @@ export default function Hero() {
             { value: "0%", label: "tax" },
             { value: "4217", label: "chain" },
           ].map((stat) => (
-            <div key={stat.label} className="px-5 py-4">
+            <div key={stat.label} className="px-3 py-3 sm:px-5 sm:py-4">
               <div className="font-display font-bold text-lg text-ink leading-none">
                 {stat.value}
               </div>
@@ -184,11 +163,12 @@ export default function Hero() {
           width={720}
           height={720}
           style={{
-            height: "70vh",
+            height: "48svh",
             width: "auto",
             objectFit: "contain",
             objectPosition: "bottom center",
-            opacity: 0.12,
+            opacity: 0.11,
+            transform: "translateY(4%)",
           }}
           loading="eager"
         />

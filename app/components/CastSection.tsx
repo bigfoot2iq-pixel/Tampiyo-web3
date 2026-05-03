@@ -33,16 +33,15 @@ const characters = [
 
 export default function CastSection() {
   return (
-    <section id="characters" className="py-28 md:py-36 px-6 md:px-12 bg-paper">
+    <section id="characters" className="bg-paper px-5 py-20 sm:px-6 sm:py-24 md:px-12 md:py-36">
       <div className="max-w-[1200px] mx-auto">
         {/* Section header — left-aligned, asymmetric */}
-        <div className="mb-16 reveal-stamp">
+        <div className="mb-10 reveal-stamp sm:mb-12 md:mb-16">
           <div className="font-stencil text-xs text-smoke uppercase tracking-widest mb-4">
             The Tampiyo Universe
           </div>
           <h2
-            className="font-display font-bold text-ink leading-[0.9] tracking-tight"
-            style={{ fontSize: "clamp(32px, 4.5vw, 56px)" }}
+            className="font-display text-[34px] font-bold leading-[0.94] text-ink sm:text-[44px] lg:text-[56px]"
           >
             One Panda,
             <br />

@@ -1,7 +1,7 @@
 'use client';
 import { ConnectButton as RKConnectButton } from '@rainbow-me/rainbowkit';
 
-export function ConnectButton() {
+export function ConnectButton({ compact = false }: { compact?: boolean }) {
   return (
     <RKConnectButton.Custom>
       {({
@@ -21,21 +21,47 @@ export function ConnectButton() {
           (!authenticationStatus || authenticationStatus === 'authenticated');
 
         if (!ready) {
-          return <span className="wallet-button wallet-button-placeholder" aria-hidden="true" />;
+          return (
+            <span
+              className={`wallet-button wallet-button-placeholder${compact ? ' wallet-button-compact' : ''}`}
+              aria-hidden="true"
+            />
+          );
         }
 
         if (!connected) {
           return (
-            <button type="button" className="wallet-button wallet-button-connect" onClick={openConnectModal}>
-              Connect Wallet
+            <button
+              type="button"
+              className={`wallet-button wallet-button-connect${compact ? ' wallet-button-compact' : ''}`}
+              onClick={openConnectModal}
+            >
+              {compact ? 'Connect' : 'Connect Wallet'}
             </button>
           );
         }
 
         if (chain.unsupported) {
           return (
-            <button type="button" className="wallet-button wallet-button-error" onClick={openChainModal}>
+            <button
+              type="button"
+              className={`wallet-button wallet-button-error${compact ? ' wallet-button-compact' : ''}`}
+              onClick={openChainModal}
+            >
               Wrong Network
+            </button>
+          );
+        }
+
+        if (compact) {
+          return (
+            <button
+              type="button"
+              className="wallet-button wallet-button-account wallet-button-compact"
+              onClick={openAccountModal}
+              aria-label={`Open account menu for ${account.displayName}`}
+            >
+              <span className="wallet-account-name">{account.displayName}</span>
             </button>
           );
         }

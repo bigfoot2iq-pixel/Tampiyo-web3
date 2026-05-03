@@ -17,7 +17,7 @@ const proofCards = [
   {
     label: "Claim Flow",
     value: "Approve -> Claim",
-    detail: "One fee-token approval, then tiered $TMPY claims with cooldowns.",
+    detail: "One fee-token approval, then tiered $TAMPIYO claims with cooldowns.",
   },
 ];
 
@@ -31,7 +31,7 @@ export default function TempoProofSection() {
   return (
     <section
       id="tempo"
-      className="relative py-28 md:py-36 px-6 md:px-12 bg-ink text-paper overflow-hidden scroll-mt-24"
+      className="relative scroll-mt-20 overflow-hidden bg-ink px-5 py-20 text-paper sm:px-6 sm:py-24 md:scroll-mt-24 md:px-12 md:py-36"
     >
       <div className="absolute inset-0 halftone" aria-hidden="true" />
       <div className="relative z-10 max-w-[1160px] mx-auto">
@@ -41,8 +41,7 @@ export default function TempoProofSection() {
               Tempo Native
             </div>
             <h2
-              className="font-display font-bold leading-[0.9] tracking-tight text-paper"
-              style={{ fontSize: "clamp(34px, 5vw, 68px)" }}
+              className="font-display text-[36px] font-bold leading-[0.94] text-paper sm:text-[46px] lg:text-[64px]"
             >
               Built where payments move.
             </h2>
@@ -57,7 +56,7 @@ export default function TempoProofSection() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 border border-paper/25 text-paper/80 text-xs uppercase tracking-widest no-underline hover:border-gold hover:text-gold transition-colors"
+                  className="w-full border border-paper/25 px-4 py-2 text-center text-xs uppercase tracking-widest text-paper/80 no-underline transition-colors hover:border-gold hover:text-gold sm:w-auto"
                 >
                   {link.label}
                 </a>

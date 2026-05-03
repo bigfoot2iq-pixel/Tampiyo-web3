@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function CommunitySection() {
   return (
-    <section className="relative bg-charcoal py-32 md:py-40 px-6 md:px-12 overflow-hidden">
+    <section className="relative overflow-hidden bg-charcoal px-5 py-20 sm:px-6 sm:py-24 md:px-12 md:py-40">
       {/* Halftone overlay */}
       <div className="absolute inset-0 halftone" />
 
@@ -28,8 +28,7 @@ export default function CommunitySection() {
           Join the Movement
         </div>
         <h2
-          className="font-display font-bold text-paper leading-[0.9] tracking-tight mb-6"
-          style={{ fontSize: "clamp(36px, 5vw, 72px)" }}
+          className="mb-6 font-display text-[42px] font-bold leading-[0.94] text-paper sm:text-[54px] lg:text-[72px]"
         >
           Join. Or{" "}
           <span
@@ -41,13 +40,13 @@ export default function CommunitySection() {
         </h2>
 
         {/* Social buttons — ink-outlined, no fills */}
-        <div className="flex flex-wrap justify-center gap-4 mt-12">
+        <div className="mt-10 flex flex-wrap justify-center gap-3 sm:mt-12 sm:gap-4">
           {/* X / Twitter */}
           <a
             href="https://x.com/Tampiyocoin"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-3 px-8 py-4 border-2 border-paper/30 text-paper font-body font-medium text-sm uppercase tracking-wider no-underline transition-colors hover:bg-paper hover:text-charcoal"
+            className="group flex w-full items-center justify-center gap-3 border-2 border-paper/30 px-6 py-4 font-body text-sm font-medium uppercase tracking-wider text-paper no-underline transition-colors hover:bg-paper hover:text-charcoal sm:w-auto sm:px-8"
           >
             <svg
               width="18"
@@ -64,7 +63,7 @@ export default function CommunitySection() {
 
           {/* Discord */}
           <span
-            className="group flex items-center gap-3 px-8 py-4 border-2 border-paper/15 text-paper/45 font-body font-medium text-sm uppercase tracking-wider"
+            className="group flex w-full items-center justify-center gap-3 border-2 border-paper/15 px-6 py-4 font-body text-sm font-medium uppercase tracking-wider text-paper/45 sm:w-auto sm:px-8"
             aria-disabled="true"
           >
             <svg
@@ -83,7 +82,7 @@ export default function CommunitySection() {
           {/* Claim */}
           <Link
             href="#claim"
-            className="group flex items-center gap-3 px-8 py-4 border-2 border-paper/30 text-paper font-body font-medium text-sm uppercase tracking-wider no-underline transition-colors hover:bg-paper hover:text-charcoal"
+            className="group flex w-full items-center justify-center gap-3 border-2 border-paper/30 px-6 py-4 font-body text-sm font-medium uppercase tracking-wider text-paper no-underline transition-colors hover:bg-paper hover:text-charcoal sm:w-auto sm:px-8"
           >
             <svg
               width="18"
@@ -98,7 +97,7 @@ export default function CommunitySection() {
               <path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
               <path d="M16 12h.01" />
             </svg>
-            Claim $TMPY
+            Claim $TAMPIYO
           </Link>
         </div>
       </div>

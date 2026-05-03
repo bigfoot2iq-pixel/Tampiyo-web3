@@ -36,17 +36,16 @@ export default function NumbersSection() {
   return (
     <section
       id="tokenomics"
-      className="py-28 md:py-36 px-6 md:px-12 bg-paper"
+      className="bg-paper px-5 py-20 sm:px-6 sm:py-24 md:px-12 md:py-36"
     >
       <div className="max-w-[900px] mx-auto">
         {/* Section header */}
-        <div className="mb-16 reveal-stamp">
+        <div className="mb-10 reveal-stamp sm:mb-12 md:mb-16">
           <div className="font-stencil text-xs text-smoke uppercase tracking-widest mb-4">
             Tokenomics
           </div>
           <h2
-            className="font-display font-bold text-ink leading-[0.9] tracking-tight"
-            style={{ fontSize: "clamp(28px, 4vw, 48px)" }}
+            className="font-display text-[32px] font-bold leading-[0.94] text-ink sm:text-[40px] lg:text-[48px]"
           >
             The math.
             <br />
@@ -61,11 +60,10 @@ export default function NumbersSection() {
           {tokenRows.map((row) => (
             <div
               key={row.label}
-              className="flex items-baseline gap-6 py-6 border-b border-ink/15"
+              className="flex flex-col gap-1 border-b border-ink/15 py-5 sm:flex-row sm:items-baseline sm:gap-6 sm:py-6"
             >
               <span
-                className="font-display font-bold text-ink flex-shrink-0"
-                style={{ fontSize: "clamp(32px, 5vw, 56px)" }}
+                className="flex-shrink-0 font-display text-[38px] font-bold leading-none text-ink sm:text-[46px] lg:text-[56px]"
               >
                 {row.fraction}
               </span>
@@ -77,7 +75,7 @@ export default function NumbersSection() {
         </div>
 
         {/* Contract address */}
-        <div className="mt-12 p-6 bg-paper-2 border border-ink/10 reveal-stamp">
+        <div className="mt-10 border border-ink/10 bg-paper-2 p-4 reveal-stamp sm:mt-12 sm:p-6">
           <div className="text-xs text-smoke uppercase tracking-widest mb-3">
             Tempo Contract Address
           </div>
@@ -85,9 +83,9 @@ export default function NumbersSection() {
             <code className="font-mono text-ink text-sm break-all">
               {contractIsLive ? CONTRACT_ADDRESS : "Revealed at launch"}
             </code>
-            <div className="flex flex-wrap gap-3" aria-live="polite">
+            <div className="flex w-full flex-wrap gap-3 sm:w-auto" aria-live="polite">
               <button
-                className="flex-shrink-0 btn-paper text-xs py-2 px-4"
+                className="btn-paper w-full flex-shrink-0 px-4 py-2 text-xs sm:w-auto"
                 onClick={handleCopy}
                 aria-label="Copy Tempo contract address"
                 disabled={!contractIsLive}
@@ -99,12 +97,12 @@ export default function NumbersSection() {
                   href={`${EXPLORER_BASE_URL}/address/${CONTRACT_ADDRESS}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-paper text-xs py-2 px-4 no-underline"
+                  className="btn-paper w-full px-4 py-2 text-center text-xs no-underline sm:w-auto"
                 >
                   View Explorer
                 </a>
               ) : (
-                <span className="inline-flex items-center border border-ink/20 px-4 py-2 text-xs uppercase tracking-widest text-smoke">
+                <span className="inline-flex w-full items-center justify-center border border-ink/20 px-4 py-2 text-center text-xs uppercase tracking-widest text-smoke sm:w-auto">
                   Verification pending
                 </span>
               )}
