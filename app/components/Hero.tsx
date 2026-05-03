@@ -17,7 +17,7 @@ const petals = [
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[100svh] overflow-hidden bg-paper md:min-h-screen">
+    <section className="relative flex flex-col min-h-[100svh] overflow-hidden bg-paper md:block md:min-h-screen">
       {/* Sakura petals */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         {petals.map((p) => (
@@ -49,8 +49,9 @@ export default function Hero() {
       </div>
 
       {/* Nav */}
-      <nav className="landing-nav fixed top-0 left-0 right-0 z-[100] flex items-center justify-between gap-3 px-4 py-3 sm:px-5 md:px-12 md:py-5"
-        style={{ background: 'linear-gradient(to bottom, rgba(10,10,11,0.95) 0%, transparent 100%)', backdropFilter: 'blur(2px)' }}
+      <nav
+        className="landing-nav fixed top-0 left-0 right-0 z-[100] flex items-center justify-between gap-3 px-4 py-3 sm:px-5 md:px-12 md:py-5"
+        style={{ background: "linear-gradient(to bottom, rgba(10,10,11,0.95) 0%, transparent 100%)", backdropFilter: "blur(2px)" }}
       >
         <Link href="/" className="flex min-w-0 items-center gap-2 text-ink no-underline sm:gap-3" aria-label="Tampiyo home">
           <BeretLogo size={32} className="flex-shrink-0 text-ink" />
@@ -62,25 +63,42 @@ export default function Hero() {
           </span>
         </Link>
         <div className="landing-nav-links hidden items-center gap-6 font-body text-xs uppercase tracking-widest md:flex">
-          <Link href="#claim" className="text-paper/80 no-underline hover:text-gold transition-colors">
-            Claim
-          </Link>
-          <Link href="#tempo" className="text-paper/80 no-underline hover:text-gold transition-colors">
-            Tempo
-          </Link>
-          <Link href="#tokenomics" className="text-paper/80 no-underline hover:text-gold transition-colors">
-            Tokenomics
-          </Link>
+          <Link href="#claim" className="text-paper/80 no-underline hover:text-gold transition-colors">Claim</Link>
+          <Link href="#tempo" className="text-paper/80 no-underline hover:text-gold transition-colors">Tempo</Link>
+          <Link href="#tokenomics" className="text-paper/80 no-underline hover:text-gold transition-colors">Tokenomics</Link>
         </div>
         <div className="flex flex-shrink-0 justify-end">
           <ConnectButton compact />
         </div>
       </nav>
 
+      {/* Mobile panda — stacked above content, properly visible */}
+      <div
+        className="md:hidden relative w-full z-0 pointer-events-none select-none"
+        style={{ marginTop: "64px", height: "44svh" }}
+      >
+        <Image
+          src="/panda/king.png"
+          alt=""
+          fill
+          sizes="100vw"
+          style={{
+            objectFit: "contain",
+            objectPosition: "bottom center",
+            opacity: 0.9,
+          }}
+          loading="eager"
+        />
+        <div
+          className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
+          style={{ background: "linear-gradient(to top, var(--color-paper) 0%, transparent 100%)" }}
+        />
+      </div>
+
       {/* Main hero content */}
-      <div className="relative z-10 flex min-h-[100svh] w-full flex-col justify-center px-5 pb-10 pt-24 sm:px-6 sm:pt-28 md:min-h-screen md:w-1/2 md:pb-16 md:pl-16 md:pt-32 lg:pl-24 xl:pl-32">
+      <div className="relative z-10 flex flex-col px-5 pb-10 pt-5 flex-1 sm:px-6 md:absolute md:inset-y-0 md:left-0 md:flex-none md:w-1/2 md:pb-16 md:pl-16 md:pt-32 md:justify-center lg:pl-24 xl:pl-32">
         <h1
-          className="font-display text-[44px] font-bold leading-[0.96] text-ink sm:text-[54px] md:text-[60px] lg:text-[72px] xl:text-[80px]"
+          className="font-display text-[38px] font-bold leading-[0.96] text-ink sm:text-[50px] md:text-[60px] lg:text-[72px] xl:text-[80px]"
         >
           <span className="ink-wipe block" style={{ animationDelay: "0.1s" }}>
             A grumpy panda.
@@ -97,7 +115,7 @@ export default function Hero() {
         </h1>
 
         <p
-          className="font-body mt-7 max-w-[18rem] text-[15px] leading-7 text-ink-soft opacity-0 sm:mt-8 sm:max-w-xs"
+          className="font-body mt-5 max-w-[18rem] text-[15px] leading-7 text-ink-soft opacity-0 sm:mt-7 sm:max-w-xs"
           style={{ animation: "fadeSlideUp 0.6s 0.7s ease forwards" }}
         >
           <strong className="text-ink" translate="no">$TAMPIYO</strong> on Tempo Mainnet.
@@ -105,7 +123,7 @@ export default function Hero() {
         </p>
 
         <div
-          className="hero-actions mt-7 flex flex-col gap-3 opacity-0 sm:mt-8 sm:flex-row"
+          className="hero-actions mt-5 flex flex-col gap-3 opacity-0 sm:mt-7 sm:flex-row"
           style={{ animation: "fadeSlideUp 0.6s 0.9s ease forwards" }}
         >
           <Link className="btn-ink btn-ink-gold text-center text-xs no-underline sm:text-sm" href="#claim">
@@ -117,7 +135,7 @@ export default function Hero() {
         </div>
 
         <div
-          className="mt-8 grid w-full max-w-[20rem] grid-cols-3 divide-x divide-ink/15 border-y border-ink/20 font-body opacity-0 sm:mt-10 sm:w-fit"
+          className="mt-6 grid w-full max-w-[20rem] grid-cols-3 divide-x divide-ink/15 border-y border-ink/20 font-body opacity-0 sm:mt-8 sm:w-fit"
           style={{ animation: "fadeSlideUp 0.6s 1.1s ease forwards" }}
         >
           {[
@@ -126,61 +144,33 @@ export default function Hero() {
             { value: "4217", label: "chain" },
           ].map((stat) => (
             <div key={stat.label} className="px-3 py-3 sm:px-5 sm:py-4">
-              <div className="font-display font-bold text-lg text-ink leading-none">
-                {stat.value}
-              </div>
-              <div className="text-[10px] text-smoke uppercase tracking-widest mt-1.5">
-                {stat.label}
-              </div>
+              <div className="font-display font-bold text-lg text-ink leading-none">{stat.value}</div>
+              <div className="text-[10px] text-smoke uppercase tracking-widest mt-1.5">{stat.label}</div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Hero panda — right side, anchored top-to-bottom */}
-      <div className="absolute top-0 right-0 bottom-0 z-0 pointer-events-none select-none hidden md:flex items-end w-[46%] lg:w-[48%]">
+      {/* Hero panda — desktop right side, cover keeps full height at any screen size */}
+      <div className="absolute top-0 right-0 bottom-0 z-0 pointer-events-none select-none hidden md:block w-[46%] lg:w-[48%]">
         <Image
           src="/panda/king.png"
           alt=""
           fill
           sizes="(max-width: 1024px) 46vw, 48vw"
-          className="block"
           style={{
-            objectFit: "contain",
-            objectPosition: "bottom right",
+            objectFit: "cover",
+            objectPosition: "bottom center",
             opacity: 0.92,
           }}
           preload
         />
       </div>
 
-      {/* Mobile panda — low opacity background */}
-      <div className="absolute inset-0 z-0 pointer-events-none select-none md:hidden flex items-end justify-center">
-        <Image
-          src="/panda/king.png"
-          alt=""
-          className="block"
-          width={720}
-          height={720}
-          style={{
-            height: "48svh",
-            width: "auto",
-            objectFit: "contain",
-            objectPosition: "bottom center",
-            opacity: 0.11,
-            transform: "translateY(4%)",
-          }}
-          loading="eager"
-        />
-      </div>
-
-      {/* Fade at bottom edge to blend panda */}
+      {/* Bottom fade */}
       <div
         className="absolute bottom-0 left-0 right-0 h-32 z-[5] pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(to top, var(--color-paper) 0%, transparent 100%)",
-        }}
+        style={{ background: "linear-gradient(to top, var(--color-paper) 0%, transparent 100%)" }}
       />
     </section>
   );
